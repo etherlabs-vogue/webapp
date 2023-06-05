@@ -45,4 +45,4 @@ EXPOSE 3001
 
 ENV PORT 3001
 
-CMD ["node", "dist/app.js"]
+# CMD ["node", "dist/app.js"]
