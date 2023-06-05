@@ -1,5 +1,5 @@
 
-import {Terminal,ITerminalOptions } from 'xterm'
+import {Terminal } from 'xterm'
 import 'xterm/css/xterm.css'
 import {AttachAddon}  from 'xterm-addon-attach'
 import { FitAddon } from "xterm-addon-fit";
@@ -47,14 +47,16 @@ function App() {
 
   //   // }
   // }, [ws])
-  
-  const socket = new WebSocket('ws://localhost:3000/terminals')
+
+  const socket = new WebSocket('ws://localhost:3001/terminals')
   useEffect(() => {
+
+    
     if(ref.current && socket){
       const xterm = (xtermRef.current = new Terminal({theme:xtermjsTheme}));
       // const ws = new WebSocket('ws://localhost:3000/terminals')
       var attach = new AttachAddon(socket)
-      //@ts-expect-error
+      // @ts-expect-error
       socket.onopen = xterm.loadAddon(attach)
       const fitAddon = new FitAddon();
       xterm.loadAddon(fitAddon);
@@ -63,7 +65,7 @@ function App() {
     }
   
     return () => {
-     socket.close() 
+    //  socket.close() 
      
     }
   }, [])
