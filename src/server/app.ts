@@ -19,7 +19,7 @@ const { app, } = expressWs(expressApp)
 const shell = process.env[platform() === 'win32' ? 'COMSPEC' : 'SHELL']
 
 // app.use(cors())
-app.use(express.static('./dist/client'));
+app.use(express.static(__dirname + '/client'));
 // Handle client routing, return all requests to the app
 app.get('/', (_req, res) => {
     res.sendFile(path.join(__dirname, 'client/index.html'));
@@ -55,8 +55,9 @@ app.post('/terminals', (req, res) => {
   }
 });
 app.ws('/terminals', (ws,req)=>{
+  process.env['COLORTERM'] ='truecolor';
   var term = spawn(process.platform === 'win32' ? 'pwsh.exe' : 'bash', [], {
-    name: 'xterm-color',
+    name: 'xterm-256color',
     cols: 80,
     rows: 30,
     cwd:'/',
